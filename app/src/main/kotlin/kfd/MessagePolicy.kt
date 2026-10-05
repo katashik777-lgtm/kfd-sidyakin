@@ -3,4 +3,7 @@ package kfd
 fun canSendMessage(
     text: String?,
     maxLength: Int = 140
-): Boolean = text!!.isNotEmpty() && text.length < maxLength
+): Boolean {
+    if (maxLength <= 0 || text.isNullOrEmpty()) return false
+    return text.length <= maxLength
+}
