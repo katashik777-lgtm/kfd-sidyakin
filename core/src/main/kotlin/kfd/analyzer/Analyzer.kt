@@ -17,7 +17,7 @@ fun scan(root: File): List<FileStat> {
         .onEnter { dir -> dir == root || (dir.name !in SKIPPED_DIRS && !Files.isSymbolicLink(dir.toPath())) }
         .forEach { file ->
             if (file.isFile && file.extension in SOURCE_EXTENSIONS && !Files.isSymbolicLink(file.toPath())) {
-                val lines = file.useLines { it.count() }
+                val lines = file.useLines { lines -> lines.fold(0) { n, _ -> n + 1 } }
                 result += FileStat(file.relativeTo(root).invariantSeparatorsPath, file.extension, lines)
             }
         }
